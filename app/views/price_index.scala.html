@@ -1,0 +1,39 @@
+@(dates: Form[DateInputForm])(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+@request.flash.get("success").map { key =>
+    @request.messages(key)
+}
+
+@main("Bit-coin Price Portal:") {
+    @form(routes.BitcoinController.searchPrice()) {
+        @inputDate(dates("from"))
+        @inputDate(dates("to"))
+        @CSRF.formField
+
+        <div class="buttons">
+            <input type="submit" value="Search"/>
+        </div>
+    }
+    @form(routes.BitcoinController.todaysPrice()) {
+        <div class="buttons">
+            <input type="submit" value="today's Price"/>
+        </div>
+    }
+    @form(routes.BitcoinController.lastMonth()){
+        <div class="buttons">
+            <input type="submit" value="last month summary"/>
+        </div>
+    }
+    @form(routes.BitcoinController.lastWeek()){
+        <div class="buttons">
+            <input type="submit" value="last week summary"/>
+        </div>
+    }
+    @form(routes.BitcoinController.refresh()){
+        <div class="buttons">
+            <input type="submit" value="refresh data"/>
+        </div>
+    }
+}
